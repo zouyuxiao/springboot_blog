@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/images/title.png" type="images/x-ico"/>
+    <title>修改分类</title>
+</head>
+<body>
+<form th:action="@{/api/category/update}" th:each="categories:${categories}" method="post">
+    <input th:value="${categories.id}" name="id" style="display: none"><br>
+    类别：<input type="text" th:value="${categories.name}" name="name"><span th:text="${name}"></span><br>
+    <input type="submit" value="修改">
+</form>
+</body>
+</html>

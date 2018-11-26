@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/images/title.png" type="images/x-ico"/>
+    <title>个人主页</title>
+    <script src="/js/jquery-1.9.1.min.js"></script>
+    <script src="/js/jquery.pagination.js"></script>
+    <script>
+        //显示数据及分页
+        $(function(){
+            getData(1);
+        });
+        function getData(page_num){
+            var id = [[${session.user.uId}]];
+            var _data = "page_num=" + page_num + "&page_size=1";
+            $.ajax({
+                url:"/api/user/selectContents/"+id,
+                type:"get",
+                dataType:"json",
+                cache:false,//去掉缓存
+                xhrFields:{
+                    withCredentials:true
+                },
+                data:_data,
+                success: function (result) {
+                    if (result.code == 200) {
+                        initData(result.data);
+                        // window.location.href = "/index";
+                    }
+                }
+            });
+            $("#list").html(tr_str);
+            $(".M-box").pagination({
+                pageCount: data.pages,
+                current: data.pageNum,
+                callback: 'pageselectCallback',
+                prevContent: "上一页",
+                nextContent: "下一页",
+                jump: true,
+                coping: true,
+                callback: function (api) {
+                    getData(api.getCurrent())
+                }
+            });
+        }
+
+
+        // 搜索
+        function search(page_num){
+            var _data = "page_num=" + page_num + "&page_size=1";
+            $.ajax({
+                url: "/api/contents/selectByTitle",
+                type: "get",
+                data: $("#search").serialize(),
+                dataType:"json",
+                cache:false,//去掉缓存
+                xhrFields:{
+                    withCredentials:true
+                },
+                beforeSend: function() {
+                },
+                complete: function() {
+                },
+                success: function (result) {
+                    if (result.code == 200) {
+                        initData(result.data);
+                    } else {
+                        alert(result.msg);
+                    }
+                },error: function (result) {
+                    alert("网络连接失败！");
+                }
+            });
+        }
+        function initData(data) {
+            var list = data.list;
+            var tr_str = "<ul>" + "</ul>";
+            for (var i = 0; i < list.length; i++) {
+                var users = list[i].users;
+                var categories = list[i].categories;
+                for (var x = 0; x < 1; x++) {
+                    tr_str += "<ul  data-id='" + list[i].id + "'>" +
+                        "<li id='title'>" + list[i].title + "</li>" +
+                        "<li>" + list[i].content + "</li>" +
+                        "<ul id='information'>" +
+                        "<li>" + '发表时间：'+list[i].time + "</li>" +
+                        "<li>" + '作者：'+users[x].username + "</li>" +
+                        "<li >" + '类别：'+categories[x].name + "</li>" +
+                        "<li><a href='#'>评论</a></li>" +
+                        "<li ><a href='#'>点赞</a></li>" +
+                        "<li ><a href='#'>收藏</a></li>" +
+                        "<li ><a href='#'>转发</a></li>" +
+                        "</ul>" +
+                        "</ul><br/><br/><br/>";
+                }
+            }
+            $("#list").html(tr_str);
+            $(".M-box").pagination({
+                pageCount: data.pages,
+                current: data.pageNum,
+                callback: 'pageselectCallback',
+                prevContent: "上一页",
+                nextContent: "下一页",
+                jump: true,
+                coping: true,
+                callback: function (api) {
+                    getData(api.getCurrent())
+                }
+            });
+        }
+    </script>
+   </head>
+<body>
+    <div id="header">
+        <h1>我的主页</h1>
+        <h3 th:if="${session.user != null}" th:text="'欢迎你回来'+${session.user.username}"></h3>
+        <img th:src="${session.user.getImg()}" style="width: 8%;height: 30%;border-radius: 60%;"><br>
+        <form id="search" method="get">
+            <input type="text" name="title" placeholder="搜索" id="search_box"/>
+            <input type="button" value="搜索" id="search_btn" onclick="search()">
+        </form>
+        <a href="/user/update_info.html">修改个人信息</a>
+        <a href="/index">返回首页</a>
+    </div>
+    <div id="center">
+        <div id="list">
+        </div>
+        <div>
+            <div class="M-box"></div>
+        </div>
+    </div>
+</body>
+</html>

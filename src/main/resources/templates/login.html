@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/images/title.png" type="images/x-ico"/>
+    <title>登录</title>
+    <script src="/js/jquery-1.9.1.min.js"></script>
+    <link rel="stylesheet" href="/css/login.css">
+    <script>
+        function Logon(){
+                        $.ajax({
+                            url: "/api/user/login",
+                            type: "get",
+                            data: $("#form1").serialize(),
+                            dataType: "json",
+                            cache: false,
+                            beforeSend: function() {
+                            },
+                            complete: function() {
+                            },
+                            success: function (result) {
+                                if (result.code == 200) {
+                                    window.location.href = "/index";
+                                } else {
+                                    alert(result.msg);
+                                }
+                            },error: function (result) {
+                                alert("网络连接失败！");
+                            }
+                        });
+                    }
+    </script>
+</head>
+<body>
+    <div id="header"></div>
+    <div id="center">
+        <form action="" id="form1" method="get" enctype="multipart/form-data">
+            <table cellpadding="5" cellspacing="0" border="0" class="centenTable" align="center">
+                <caption style="font-family:'华文行楷'; font-size:25px; margin-top: 20px;">输入您登录的信息</caption>
+                <tr>
+                    <td>昵称：
+                        <input type="text" id="username" name="username" autocomplete="off" value="admin" class="input"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>密码：
+                        <input type="password" id="pow" name="password" autocomplete="off" value="123456" class="input"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input name="remeber_me" type="checkbox"/>
+                        <label>记住我</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td><input type="button" id="btn" value="登录"  onclick="Logon()"/>
+                        <a href="/register" class="text1">注册</a>
+                    </td>
+                </tr>
+            </table>
+        </form>
+
+    </div>
+    <div id="footer"></div>
+</body>
+</html>

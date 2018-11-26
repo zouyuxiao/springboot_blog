@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yuxiao.blog.dao.CommentDao">
+    <resultMap id="commentRusultMap" type="com.yuxiao.blog.bean.Comment">
+        <id column="id" property="id"/>
+        <result column="content" property="content"/>
+        <result column="time" property="time"/>
+        <result column="u_id" property="uId"/>
+        <result column="reply_id" property="replyId"/>
+        <result column="content_id" property="contentId"/>
+        <collection property="users" column="u_id" select="com.yuxiao.blog.dao.UserDao.selectById"></collection>
+        <collection property="replies" column="reply_id" select="com.yuxiao.blog.dao.ReplyDao.selectById"></collection>
+        <collection property="contents" column="content_id" select="com.yuxiao.blog.dao.ContentsDao.selectById"></collection>
+    </resultMap>
+    <resultMap id="replyResultMap" type="com.yuxiao.blog.bean.Reply">
+        <id column="id" property="id"/>
+        <result column="u_id" property="uId"/>
+        <result column="comment_id" property="commentId"/>
+        <result column="content" property="content"/>
+        <collection property="users" column="u_id" select="com.yuxiao.blog.dao.UserDao.selectById"></collection>
+        <collection property="comments" column="comment_id" select="com.yuxiao.blog.dao.CommentDao.selectById"></collection>
+    </resultMap>
+    <select id="list" resultMap="commentRusultMap" resultType="com.yuxiao.blog.bean.Comment">
+        SELECT * FROM comment
+    </select>
+    <select id="selectById" resultMap="commentRusultMap" resultType="com.yuxiao.blog.bean.Comment">
+        SELECT * FROM comment WHERE id=#{id}
+    </select>
+    <insert id="add">
+        INSERT INTO comment(content,time,u_id,content_id)
+        VALUES (#{content},#{time},#{uId},#{contentId})
+    </insert>
+    <update id="update">
+        UPDATE comment SET content=#{content},time=#{time},u_id=#{uId},content_id=#{contentId}
+    </update>
+    <delete id="delete">
+        DELETE FROM comment WHERE id=#{id}
+    </delete>
+    <select id="selectReply" resultMap="replyResultMap" resultType="com.yuxiao.blog.bean.Reply">
+        SELECT * FROM comment_reply WHERE comment_id=#{id}
+    </select>
+</mapper>

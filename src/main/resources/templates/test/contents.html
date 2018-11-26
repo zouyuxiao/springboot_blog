@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/images/title.png" type="images/x-ico"/>
+    <title>博客测试</title>
+</head>
+<body>
+<form action="/api/contents/add" method="post">
+    title:<input type="text" name="title">
+    content:<input type="text" name="content">
+    uId:<input type="text" name="uId">
+    status：
+    <input type="radio" name="status" value="1">草稿
+    <input type="radio" name="status" value="2">发表
+    cId：<input type="text" name="cId">
+    <input type="submit" value="add">
+</form>
+<form action="/api/contents/update" method="post">
+    id:<input type="text" name="id">
+    title:<input type="text" name="title">
+    content:<input type="text" name="content">
+    uId:<input type="text" name="uId">
+    status：
+    <input type="radio" name="status" value="1">草稿
+    <input type="radio" name="status" value="2">发表
+
+    cId：<input type="text" name="cId">
+    <input type="submit" value="update">
+</form>
+<form action="/api/contents/updateStatus" method="post">
+    id:<input type="text" name="id">
+    status：
+    <input type="radio" name="status" value="1">草稿
+    <input type="radio" name="status" value="2">发表
+    <input type="submit" value="updateStatus">
+</form>
+</body>
+</html>

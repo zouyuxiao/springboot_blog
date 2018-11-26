@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/images/title.png" type="images/x-ico"/>
+    <title>用户文档</title>
+</head>
+<body>
+    <h3>用户文档</h3>
+    <ul>
+        <li><a href="/test/user">用户接口测试</a></li>
+
+        <li><p>POST：<a href="/api/user/reg">/api/user/reg</a></p></li>
+        <p>描述：用户登录</p>
+        <p>参数：username（用户名，不为空），password（密码，不为空），sex（性别，不为空），email(邮箱，不为空），phone（手机号码，不为空），
+            file（上传头像，可为空），code（验证码，不为空）</p>
+
+        <br/>
+        <li><p>GET：<a href="/api/user/login">/api/user/login</a></p></li>
+        <p>描述：用户登录</p>
+        <p>参数：username（用户名，不为空），password（密码，不为空）</p>
+
+        <br/>
+        <li><p>GET：<a href="/api/user/logout">/api/user/logout</a></p></li>
+        <p>描述：注销登录</p>
+        <p>参数：</p>
+
+        <br/>
+        <li><p>GET：<a href="/api/user/list">/api/user/list</a></p></li>
+        <p>描述：查询所有用户</p>
+        <p>参数：page_num (默认值为1，可为空)，page_size (默认值为10，可为空)</p>
+
+        <br/>
+        <li><p>POST：<a href="/api/user/update">/api/user/update</a></p></li>
+        <p>描述：修改用户信息</p>
+        <p>参数：username（用户名，不为空），password（密码，不为空），sex（性别，不为空），email(邮箱，不为空），phone（手机号码，不为空），
+            file（上传头像，可为空）</p>
+
+        <br/>
+        <li><p>GET：<a href="/api/user/selectById/{id}">/api/user/selectById/{id}</a></p></li>
+        <p>描述：根据id查询用户信息</p>
+        <p>参数：id(主键，不为空),page_num (默认值为1，可为空)，page_size (默认值为10，可为空)</p>
+
+        <br/>
+        <li><p>GET：<a href="/api/user/selectByUsername">/api/user/selectByUsername</a></p></li>
+        <p>描述：根据用户名模糊查询用户信息</p>
+        <p>参数：username（用户名，不为空），page_num (默认值为1，可为空)，page_size (默认值为10，可为空)</p>
+
+        <br/>
+        <li><p>GET：<a href="/api/user/delete/{id}">/api/user/delete/{id}</a></p></li>
+        <p>描述：删除用户</p>
+        <p>参数：id(主键，不为空)</p>
+    </ul>
+</body>
+</html>

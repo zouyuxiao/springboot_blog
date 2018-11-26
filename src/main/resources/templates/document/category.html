@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/images/title.png" type="images/x-ico"/>
+    <title>分类文档</title>
+</head>
+<body>
+<h3>分类文档</h3>
+<ul>
+    <li><a href="/test/category">分类接口测试</a></li>
+
+    <li><p>GET：<a href="/api/category/list">/api/category/list</a></p></li>
+    <p>描述：查询所有分类</p>
+    <p>参数：name（分类名，不为空），page_num (默认值为1，可为空)，page_size (默认值为10，可为空)</p>
+
+    <br/>
+    <li><p>GET：<a href="/api/category/selectById/{id}">/api/category/selectById/{id}</a></p></li>
+    <p>描述：根据id 查询分类</p>
+    <p>参数：id（主键，不为空），page_num (默认值为1，可为空)，page_size (默认值为10，可为空)</p>
+
+    <br/>
+    <li><p>GET：<a href="/api/category/selectByName">/api/category/selectByName</a></p></li>
+    <p>描述：根据分类名模糊查询分类</p>
+    <p>参数：name（分类名，不为空），page_num (默认值为1，可为空)，page_size (默认值为10，可为空)</p>
+
+    <br/>
+    <li><p>POST：<a href="/api/category/add">/api/category/add</a></p></li>
+    <p>描述：添加分类</p>
+    <p>参数：name（分类名，不为空)</p>
+
+    <br/>
+    <li><p>GET：<a href="/api/category/delete/{id}">/api/category/delete/{id}</a></p></li>
+    <p>描述：删除分类</p>
+    <p>参数：id（主键，不为空）</p>
+
+    <br/>
+    <li><p>POST：<a href="/api/category/update">/api/category/update</a></p></li>
+    <p>描述：修改分类</p>
+    <p>参数：name（分类名，不为空)</p>
+</ul>
+</body>
+</html>

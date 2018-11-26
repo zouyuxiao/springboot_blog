@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/images/title.png" type="images/x-ico"/>
+    <title>编辑博客</title>
+    <link rel="stylesheet" href="/kindeditor-master/themes/default/default.css" />
+    <script charset="utf-8" src="/kindeditor-master/kindeditor-min.js"></script>
+    <script charset="utf-8" src="/kindeditor-master/lang/zh-CN.js"></script>
+</head>
+<body>
+<div>
+    <h3></h3>
+    <form th:action="@{/api/contents/add}" method="post" enctype="multipart/form-data" id="itemAddForm">
+        标题：<input type="text" name="title"><br/>
+        <input type="text" th:value="${uid}" name="uId" style="display: none;">
+        请选择分类：
+        <select name="cId">
+            <option th:each="category:${category}" th:value="${category.id}" th:text="${category.name}"></option>
+        </select><br/>
+        请写内容：<br>
+        <textarea name="content"  style="width:80%;height:500px;visibility:hidden;" id="editor"></textarea><br/>
+        <input type="button" name="clear" value="清空内容" /><br>
+        请选择保存方式：
+        <label><input name="status" value="1" type="radio">草稿</label>
+        <label><input name="status" value="2" type="radio">发表</label><br/>
+        <input type="submit" value="发表">
+        <div class="clearfix"></div>
+    </form>
+    <script>
+        var editor;
+        KindEditor.ready(function(K) {
+            editor = K.create('textarea[name="content"]', {
+                allowFileManager : true
+            });
+            K('input[name=getHtml]').click(function(e) {
+                alert(editor.html());
+            });
+            K('input[name=isEmpty]').click(function(e) {
+                alert(editor.isEmpty());
+            });
+            K('input[name=getText]').click(function(e) {
+                alert(editor.text());
+            });
+            K('input[name=selectedHtml]').click(function(e) {
+                alert(editor.selectedHtml());
+            });
+            K('input[name=setHtml]').click(function(e) {
+                editor.html('<h3>Hello KindEditor</h3>');
+            });
+            K('input[name=setText]').click(function(e) {
+                editor.text('<h3>Hello KindEditor</h3>');
+            });
+            K('input[name=insertHtml]').click(function(e) {
+                editor.insertHtml('<strong>插入HTML</strong>');
+            });
+            K('input[name=appendHtml]').click(function(e) {
+                editor.appendHtml('<strong>添加HTML</strong>');
+            });
+            K('input[name=clear]').click(function(e) {
+                editor.html('');
+            });
+        });
+    </script>
+</div>
+</body>
+</body>
+</html>

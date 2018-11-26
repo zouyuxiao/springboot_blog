@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/images/title.png" type="images/x-ico"/>
+    <title>添加类别</title>
+</head>
+<body>
+<form th:action="@{/api/category/add}" method="post">
+    类别名：<input name="name" type="text" placeholder="请填写类别">
+    <span th:text="${name}"></span><br/>
+    <input type="submit" value="添加">
+</form>
+</body>
+</html>

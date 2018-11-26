@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/images/title.png" type="images/x-ico"/>
+    <title>用户文档</title>
+    <script type="text/javascript">
+        function change(){
+            var img =document.getElementById("verify");
+            img.src="/api/verify/getcode?a="+new Date().getTime();
+        }
+    </script>
+</head>
+<body>
+<h1>注册</h1>
+<form action="/api/user/reg" method="get" enctype="multipart/form-data">
+    <table>
+        <tr>
+            <td>昵称：</td>
+            <td><input type="text" placeholder="昵称" name="username"></td>
+        </tr>
+        <tr>
+            <td>密码：</td>
+            <td><input name="password" type="password" placeholder="6~12个字母和数字"></td>
+        </tr>
+        <tr>
+            <td>邮箱：</td>
+            <td><input name="email" type="email" placeholder="注意邮箱格式"></td>
+        </tr>
+        <tr>
+            <td>手机号：</td>
+            <td><input type="text" name="phone" placeholder="请填写正确的手机号码"></td>
+        </tr>
+        <tr>
+            <td>性别：</td>
+            <td>
+                <input type="radio" name="sex" value="男">男
+                <input type="radio" name="sex" value="女">女
+            </td>
+        </tr>
+        <tr>
+            <td>头像：</td>
+            <td><input type="file" name="file"></td>
+        </tr>
+        <tr>
+            <td>验证码：</td>
+            <td><input type="text" name="code"></td>
+            <td><a href="javascript:change()"><img src="/api/verify/getcode" id="verify"></a> </td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="注册"></td>
+        </tr>
+    </table>
+</form>
+<hr/>
+<h1>登录</h1>
+<form action="/api/user/login" enctype="multipart/form-data">
+    <table>
+        <tr>
+            <td>昵称：</td>
+            <td><input type="text" placeholder="昵称" name="username"></td>
+        </tr>
+        <tr>
+            <td>密码：</td>
+            <td><input name="password" type="password" placeholder="6~12个字母和数字"></td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="登录"></td>
+        </tr>
+    </table>
+</form>
+<hr/>
+<h1>修改</h1>
+<form action="/api/user/update" method="post" enctype="multipart/form-data">
+    <table>
+        <tr>
+            <td>id：</td>
+            <td><input type="text" placeholder="id" name="id"></td>
+        </tr>
+        <tr>
+            <td>昵称：</td>
+            <td><input type="text" placeholder="昵称" name="username"></td>
+        </tr>
+        <tr>
+            <td>密码：</td>
+            <td><input name="password" type="password" placeholder="6~12个字母和数字"></td>
+        </tr>
+        <tr>
+            <td>邮箱：</td>
+            <td><input name="email" type="email" placeholder="注意邮箱格式"></td>
+        </tr>
+        <tr>
+            <td>手机号：</td>
+            <td><input type="text" name="phone" placeholder="请填写正确的手机号码"></td>
+        </tr>
+        <tr>
+            <td>性别：</td>
+            <td>
+                <input type="radio" name="sex" value="男">男
+                <input type="radio" name="sex" value="女">女
+            </td>
+        </tr>
+        <tr>
+            <td>头像：</td>
+            <td><input type="file" name="file"></td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="注册"></td>
+        </tr>
+    </table>
+</form>
+<hr/>
+
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/images/title.png" type="images/x-ico"/>
+    <title>评论文档</title>
+</head>
+<body>
+<h3>评论文档</h3>
+<ul>
+    <li><p>GET：<a href="/api/comment/delete/{id}">/api/comment/delete/{id}</a></p></li>
+    <p>描述：删除评论</p>
+    <p>参数：id(主键，不为空)</p>
+
+    <br/>
+    <li><p>POST：<a href="/api/comment/add">/api/comment/add</a></p></li>
+    <p>描述：添加评论</p>
+    <p>参数：content（内容，不为空），uId（用户id，不为空）</p>
+
+</ul>
+<form method="post" action="/api/comment/add">
+    content:<input type="text" name="content">
+    uId:<input type="text" name="uId">
+    <input type="submit" value="add">
+</form>
+</body>
+</html>

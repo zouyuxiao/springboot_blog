@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/images/title.png" type="images/x-ico"/>
+    <title>博客文档</title>
+</head>
+<body>
+<h3>博客文档</h3>
+<ul>
+    <li><a href="/test/contents">博客接口测试</a></li>
+
+    <li><p>GET：<a href="/api/contents/list">/api/contents/list</a></p></li>
+    <p>描述：查询所有博客</p>
+    <p>参数：page_num (默认值为1，可为空)，page_size (默认值为10，可为空)</p>
+
+    <br/>
+    <li><p>GET：<a href="/api/contents/selectByTitle">/api/contents/selectByTitle</a></p></li>
+    <p>描述：根据标题模糊查询</p>
+    <p>参数：title（标题，不为空），page_num (默认值为1，可为空)，page_size (默认值为10，可为空)</p>
+
+    <br/>
+    <li><p>POST：<a href="/api/contents/add">/api/contents/add</a></p></li>
+    <p>描述：添加博客</p>
+    <p>参数：title（标题，不为空)，content（内容，不为空)，uId（用户id，外键指向user用户表，不为空)，status（状态（草稿/发表），不为空)，cId（分类id，外键指向category分类表，不为空)</p>
+
+    <br/>
+    <li><p>POST：<a href="/api/contents/update">/api/contents/update</a></p></li>
+    <p>描述：修改博客</p>
+    <p>参数：title（标题，不为空)，content（内容，不为空)，uId（用户id，外键指向user用户表，不为空)，status（状态（草稿/发表），不为空)，cId（分类id，外键指向category分类表，不为空)</p>
+
+    <br/>
+    <li><p>POST：<a href="/api/contents/updateStatus">/api/contents/updateStatus</a></p></li>
+    <p>描述：修改状态</p>
+    <p>参数：status（状态（草稿/发表），不为空)</p>
+
+    <br/>
+    <li><p>GET：<a href="/api/contents/delete/{id}">/api/contents/delete/{id}</a></p></li>
+    <p>描述：删除</p>
+    <p>参数：id（主键，不为空）</p>
+
+    <br/>
+    <li><p>GET：<a href="/api/contents/selectById/{id}">/api/contents/selectById/{id}</a></p></li>
+    <p>描述：根据id查询</p>
+    <p>参数：id（主键，不为空）</p>
+
+</ul>
+</body>
+</html>

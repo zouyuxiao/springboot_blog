@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/images/title.png" type="images/x-ico"/>
+    <title>通过标题模糊查询博客</title>
+    <link href="/css/index.css" rel="stylesheet">
+    <script src="/js/jquery-1.9.1.min.js"></script>
+    <script src="/js/jquery.pagination.js"></script>
+    <script>
+        //显示数据及分页
+        $(function(){
+            getData(1);
+        });
+        function getData(page_num){
+            var _data = "page_num=" + page_num + "&page_size=1";
+            $.ajax({
+                url:"/api/contents/selectByUsername",
+                type:"get",
+                dataType:"json",
+                cache:false,//去掉缓存
+                xhrFields:{
+                    withCredentials:true
+                },
+                data:_data,
+                success: function (result) {
+                    if (result.code == 200) {
+                        initData(result.data);
+                    }
+                }
+            });
+        }
+        function initData(data) {
+            var list = data.list;
+            var tr_str = "<ul>" + "</ul>";
+            for (var i = 0; i < list.length; i++) {
+                tr_str += "<ul  data-id='" + list[i].id + "'>" +
+                    "<li id='title'>" + list[i].title + "</li>" +
+                    "<li>" + list[i].content + "</li>" +
+                    "<ul id='information'>" +
+                    "<li>" + list[i].time + "</li>" +
+                    "<li>" + list[i].uId + "</li>" +
+                    "<li >" + list[i].cId + "</li>" +
+                    "<li><a href='#'>评论</a></li>" +
+                    "<li ><a href='#'>点赞</a></li>" +
+                    "<li ><a href='#'>收藏</a></li>" +
+                    "<li ><a href='#'>转发</a></li>" +
+                    "</ul>" +
+                    "</ul><br/><br/><br/>";
+            }
+            $("#list").html(tr_str);
+            $(".M-box").pagination({
+                pageCount: data.pages,
+                current: data.pageNum,
+                callback: 'pageselectCallback',
+                prevContent: "上一页",
+                nextContent: "下一页",
+                jump: true,
+                coping: true,
+                callback: function (api) {
+                    getData(api.getCurrent())
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+<div id="center">
+    <div>
+        <div id="list">
+        </div>
+        <div>
+            <div class="M-box"></div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

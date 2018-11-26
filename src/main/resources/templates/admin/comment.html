@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/images/title.png" type="images/x-ico"/>
+    <title>评论列表</title>
+    <link rel="stylesheet" href="/css/userList.css">
+    <script src="/js/jquery-1.9.1.min.js"></script>
+    <script src="/js/jquery.pagination.js"></script>
+    <script>
+        //显示数据及分页
+        $(function(){
+            getData(1);
+        });
+        function getData(pageNum){
+            var _data =+ "page_num=" + pageNum + "&page_size=5";
+            $.ajax({
+                url:"/api/comment/list",
+                type:"get",
+                dataType:"json",
+                cache:false,//去掉缓存
+                xhrFields:{
+                    withCredentials:true
+                },
+                data:_data,
+                success: function (result) {
+                    if (result.code == 200) {
+                        initData(result.data);
+                    }
+                }
+            });
+        }
+        function initData(data){
+            var list = data.list;
+            var users = data.users;
+            var tr_str = "<tr >" +
+                "<th class='t'>内容</th>"+
+                "<th class='t'>发表评论时间</th>"+
+                "<th class='t'>用户</th>"+
+                "<th class='t'>删除</th>"+
+                "</tr>";
+            for (var i = 0; i < list.length; i++) {
+                var users = list[i].users;
+                for (var x = 0; x < 1; x++) {
+                    tr_str += "<tr  data-id='"+list[i].id+"'>" +
+                        "<td >" + list[i].content + "</td>" +
+                        "<td >" + list[i].time + "</td>" +
+                        "<td >" +users[x].username+"</td>" +
+                        "<td><a  href='#' onclick='deleteItem(this)'>删除</td>"+
+                        "</tr>";
+                }
+            }
+
+            $("#table").html(tr_str);
+
+            $(".M-box").pagination({
+                pageCount: data.pages,
+                current: data.pageNum,
+                callback: 'pageselectCallback',
+                prevContent: "上一页",
+                nextContent: "下一页",
+                jump: true,
+                coping: true,
+                callback: function (api) {
+                    getData(api.getCurrent())
+                }
+            });
+        }
+
+        //删除
+        function deleteItem(item) {
+            if (confirm("确定要删除吗？")) {
+                var id = $(item).closest("tr").data("id");
+
+                var data = "";
+                data += "id=" + id;
+                $.ajax({
+                    url: "/api/comment/delete",
+                    type: "get",
+                    dataType: "json",
+                    cache: false,
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    beforeSend: function () {},
+                    complete: function () {},
+                    data: data,
+                    success: function (result) {
+                        if (result.code == 200) {
+                            alert(result.msg);
+                            var tr = $(item).closest("tr");
+                            tr.remove();
+                        }
+                    }
+                });
+            }
+        }
+
+    </script>
+</head>
+<body>
+<div>
+    <table cellspacing="0" cellpadding="0" align="center" id="table">
+        <div id="title">评论列表</div>
+    </table>
+    <div align="center">
+        <div class="M-box"></div>
+    </div>
+</div>
+</body>
+</html>

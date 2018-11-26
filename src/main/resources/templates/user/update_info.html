@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/images/title.png" type="images/x-ico"/>
+    <title>用户管理</title>
+    <link rel="stylesheet" href="/css/userList.css">
+    <script src="/js/jquery-1.9.1.min.js"></script>
+    <script src="/js/jquery.pagination.js"></script>
+    <style type="text/css" rel="stylesheet">
+        #img{
+            width: 10%;
+            height: 60%;
+            border-radius: 60%;
+        }
+    </style>
+    <script>
+        //显示数据及分页
+        $(function(){
+            getData(1);
+        });
+        function getData(){
+            var id = [[${session.user.uId}]];
+            $.ajax({
+                url:"/api/user/selectById/"+id,
+                type:"get",
+                dataType:"json",
+                cache:false,//去掉缓存
+                xhrFields:{
+                    withCredentials:true
+                },
+                success: function (result) {
+                    if (result.code == 200) {
+                        initData(result.data);
+                    }
+                }
+            });
+        }
+        function initData(data){
+            var list = data.list;
+            var tr_str = ""
+            for (var i = 0; i < list.length; i++) {
+                tr_str +=
+                    "用户名：<input type='text' name='username' value='"+list[i].username+"'/><br>"+
+                    "密码：<input type='password' name='password' value='"+list[i].password+"'/><br>"+
+                    "性别：<input type='text' name='sex' value='"+list[i].sex+"'/><br>"+
+                    "邮箱：<input type='text' name='email' value='"+list[i].email+"'/><br>"+
+                    "手机号：<input type='text' name='phone' value='"+list[i].phone+"'/><br>"+
+                    "头像：<img src='"+list[i].img +"'><input type='file' name='file'/><br>"+
+                    "<input style='display: none' type='text' name='id' value='"+list[i].uId+"'/><br>"
+            }
+            $("#update_info").html(tr_str);
+        }
+        
+        function modify() {
+            $.ajax({
+                url: "/api/user/update",
+                type: "post",
+                data: new FormData($("#update")[0]),
+                dataType: "json",
+                cache: false, // 上传文件无需缓存
+                processData: false, // 用于对data参数进行序列化处理 这里必须false
+                contentType: false, // 必须
+                beforeSend: function() {
+                },
+                complete: function() {
+                },
+                success: function (result) {
+                    alert(result.msg);
+                    if (result.code == 200) {
+                        window.location.href = "/user/index";
+                    }
+                },error: function (result) {
+                    alert("网络连接出错！");
+                }
+            });
+        }
+
+   </script>
+</head>
+<body>
+<div>
+    <div id="">
+        <form id="update" method="post" enctype="multipart/form-data">
+            <div id="update_info"></div>
+        <input type="button" value="修改" onclick="modify()">
+            <!--<input type="submit" value="修改">-->
+        </form>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,344 @@
+<!--模糊查询-->
+<!--<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/images/title.png" type="images/x-ico"/>
+    <title>头部</title>
+    <link rel="stylesheet" href="/css/top.css"/>
+    <script src="/js/jquery-1.9.1.min.js"></script>
+</head>
+<body>
+    <div id="feader">
+        <div id="middle">
+            <br><br><br>
+            <form id="search" method="get">
+                <input type="text" name="title" placeholder="搜索" id="search_box"/>
+                <input type="button" value="搜索" id="search_btn" onclick="search()">
+            </form>
+        </div>
+    </div>
+    <div>
+        <div id="list">
+        </div>
+        <div>
+            <div class="M-box"></div>
+        </div>
+    </div>
+    <script>
+        function search(page_num){
+            var _data = "page_num=" + page_num + "&page_size=1";
+            $.ajax({
+                url: "/api/contents/selectByTitle",
+                type: "get",
+                data:$("#search").serialize(),
+                dataType:"json",
+                cache:false,//去掉缓存
+                xhrFields:{
+                    withCredentials:true
+                },
+                beforeSend: function() {
+                },
+                complete: function() {
+                },
+                success: function (result) {
+                    if (result.code == 200) {
+                        initData(result.data);
+//                        window.location.href = "/index";
+                    } else {
+                        alert(result.msg);
+                    }
+                },error: function (result) {
+                    alert("网络连接失败！");
+                }
+            });
+        }
+        function initData(data) {
+            var list = data.list;
+            var tr_str = "<ul>" + "</ul>";
+            for (var i = 0; i < list.length; i++) {
+                tr_str += "<ul  data-id='" + list[i].id + "'>" +
+                    "<li id='title'>" + list[i].title + "</li>" +
+                    "<li>" + list[i].content + "</li>" +
+                    "<ul id='information'>" +
+                    "<li>" + list[i].time + "</li>" +
+                    "<li>" + list[i].uId + "</li>" +
+                    "<li >" + list[i].cId + "</li>" +
+                    "<li><a href='#'>评论</a></li>" +
+                    "<li ><a href='#'>点赞</a></li>" +
+                    "<li ><a href='#'>收藏</a></li>" +
+                    "<li ><a href='#'>转发</a></li>" +
+                    "</ul>" +
+                    "</ul>";
+            }
+            $("#list").html(tr_str);
+            $(".M-box").pagination({
+                pageCount: data.pages,
+                current: data.pageNum,
+                callback: 'pageselectCallback',
+                prevContent: "上一页",
+                nextContent: "下一页",
+                jump: true,
+                coping: true,
+                callback: function (api) {
+                    getData(api.getCurrent())
+                }
+            });
+        }
+    </script>
+</body>
+</html>-->
+
+<!--多表查询-->
+<!--
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/images/title.png" type="images/x-ico"/>
+    <title>评论列表</title>
+    <link rel="stylesheet" href="/css/userList.css">
+    <script src="/js/jquery-1.9.1.min.js"></script>
+    <script src="/js/jquery.pagination.js"></script>
+    <script>
+        //显示数据及分页
+        $(function(){
+            getData(1);
+        });
+        function getData(pageNum){
+            var _data =+ "page_num=" + pageNum + "&page_size=5";
+            $.ajax({
+                url:"/api/comment/list",
+                type:"get",
+                dataType:"json",
+                cache:false,//去掉缓存
+                xhrFields:{
+                    withCredentials:true
+                },
+                data:_data,
+                success: function (result) {
+                    if (result.code == 200) {
+                        initData(result.data);
+                    }
+                }
+            });
+        }
+        function initData(data){
+            var list = data.list;
+            var tr_str = "<ul style='float: left;'>" +
+                "</ul>";
+            for (var i = 0; i < list.length; i++) {
+                tr_str += "<ul  style='float: left;' data-id='"+list[i].id+"'>" +
+                    "<li >" + list[i].content + "</li>" +
+                    "<li >" + list[i].time + "</li>" +
+                    "<li >" +list[i].uId+"</li>" +
+                    "<li><a  href='#' onclick='deleteItem(this)'>删除</li>"+
+                    "</ul>";
+                var  users = list[i].users;
+                for (var x = 0 ; x < 1 ; x++){
+                    tr_str += "<ul data-id='"+users[x].id+"'>" +
+                        "<li >" + users[x].username + "</li>" +
+                        "</ul>";
+                }
+            }
+
+            $("#table").html(tr_str);
+
+            $(".M-box").pagination({
+                pageCount: data.pages,
+                current: data.pageNum,
+                callback: 'pageselectCallback',
+                prevContent: "上一页",
+                nextContent: "下一页",
+                jump: true,
+                coping: true,
+                callback: function (api) {
+                    getData(api.getCurrent())
+                }
+            });
+        }
+
+        //删除
+        function deleteItem(item) {
+            if (confirm("确定要删除吗？")) {
+                var id = $(item).closest("tr").data("id");
+
+                var data = "";
+                data += "id=" + id;
+                $.ajax({
+                    url: "/api/comment/delete",
+                    type: "get",
+                    dataType: "json",
+                    cache: false,
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    beforeSend: function () {},
+                    complete: function () {},
+                    data: data,
+                    success: function (result) {
+                        if (result.code == 200) {
+                            alert(result.msg);
+                            var tr = $(item).closest("tr");
+                            tr.remove();
+                        }
+                    }
+                });
+            }
+        }
+
+    </script>
+</head>
+<body>
+<div>
+    <div align="center" id="table">
+        <div id="title">评论列表</div>
+    </div>
+    <div align="center">
+        <div class="M-box"></div>
+    </div>
+</div>
+</body>
+</html>-->
+<!--
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/images/title.png" type="images/x-ico"/>
+    <title>评论列表</title>
+    <link rel="stylesheet" href="/css/userList.css">
+    <script src="/js/jquery-1.9.1.min.js"></script>
+    <script src="/js/jquery.pagination.js"></script>
+    <script>
+        //显示数据及分页
+        $(function(){
+            getData(1);
+        });
+        function getData(pageNum){
+            var _data =+ "page_num=" + pageNum + "&page_size=5";
+            $.ajax({
+                url:"/api/comment/list",
+                type:"get",
+                dataType:"json",
+                cache:false,//去掉缓存
+                xhrFields:{
+                    withCredentials:true
+                },
+                data:_data,
+                success: function (result) {
+                    if (result.code == 200) {
+                        initData(result.data);
+                    }
+                }
+            });
+        }
+        function initData(data){
+            var list = data.list;
+            var tr_str = "<tr >" +
+                "<th class='t'>内容</th>"+
+                "<th class='t'>发表评论时间</th>"+
+                "<th class='t'>用户</th>"+
+                "<th class='t'>删除</th>"+
+                "</tr>";
+            for (var i = 0; i < list.length; i++) {
+                var users = list[i].users;
+                for (var x = 0; x < 1; x++) {
+                    tr_str += "<tr  data-id='"+list[i].id+"'>" +
+                        "<td >" + list[i].content + "</td>" +
+                        "<td >" + list[i].time + "</td>" +
+                        "<td >" +users[x].username+"</td>" +
+                        "<td><a  href='#' onclick='deleteItem(this)'>删除</td>"+
+                        "</tr>";
+                }
+
+
+             /*   var users = list[i].users;
+                for (var x = 0; x < 1; x++) {
+
+                }*/
+
+            }
+
+            $("#table").html(tr_str);
+
+            $(".M-box").pagination({
+                pageCount: data.pages,
+                current: data.pageNum,
+                callback: 'pageselectCallback',
+                prevContent: "上一页",
+                nextContent: "下一页",
+                jump: true,
+                coping: true,
+                callback: function (api) {
+                    getData(api.getCurrent())
+                }
+            });
+        }
+
+        //删除
+        function deleteItem(item) {
+            if (confirm("确定要删除吗？")) {
+                var id = $(item).closest("tr").data("id");
+
+                var data = "";
+                data += "id=" + id;
+                $.ajax({
+                    url: "/api/comment/delete",
+                    type: "get",
+                    dataType: "json",
+                    cache: false,
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    beforeSend: function () {},
+                    complete: function () {},
+                    data: data,
+                    success: function (result) {
+                        if (result.code == 200) {
+                            alert(result.msg);
+                            var tr = $(item).closest("tr");
+                            tr.remove();
+                        }
+                    }
+                });
+            }
+        }
+
+    </script>
+</head>
+<body>
+<div>
+    <table cellspacing="0" cellpadding="0" align="center" id="table">
+        <div id="title">评论列表</div>
+    </table>
+    <div align="center">
+        <div class="M-box"></div>
+    </div>
+</div>
+</body>
+</html>-->
+
+<!--富文本-->
+<!--
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>wangEditor demo</title>
+</head>
+<body>
+<div id="editor">
+    <p>请编辑</p>
+</div>
+
+&lt;!&ndash; 注意， 只需要引用 JS，无需引用任何 CSS ！！！&ndash;&gt;
+<script type="text/javascript" src="/js/wangEditor.js"></script>
+<script type="text/javascript">
+    var E = window.wangEditor
+    var editor = new E('#editor')
+    // 或者 var editor = new E( document.getElementById('editor') )
+    editor.create()
+</script>
+</body>
+</html>-->

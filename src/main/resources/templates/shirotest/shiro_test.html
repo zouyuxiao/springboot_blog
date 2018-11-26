@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/images/title.png" type="images/x-ico"/>
+    <title>shiro测试</title>
+</head>
+<body>
+<a shiro:hasPermission="user:add" href="/shirotest/add">去add</a><br>
+<a shiro:hasPermission="user:update" href="/shirotest/update">去update</a>
+</body>
+</html>
