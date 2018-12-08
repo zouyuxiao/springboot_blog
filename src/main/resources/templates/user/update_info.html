@@ -9,8 +9,8 @@
     <script src="/js/jquery.pagination.js"></script>
     <style type="text/css" rel="stylesheet">
         #img{
-            width: 10%;
-            height: 60%;
+            width: 5%;
+            height: 5%;
             border-radius: 60%;
         }
     </style>
@@ -46,7 +46,7 @@
                     "性别：<input type='text' name='sex' value='"+list[i].sex+"'/><br>"+
                     "邮箱：<input type='text' name='email' value='"+list[i].email+"'/><br>"+
                     "手机号：<input type='text' name='phone' value='"+list[i].phone+"'/><br>"+
-                    "头像：<img src='"+list[i].img +"'><input type='file' name='file'/><br>"+
+                    "头像：<img src='"+list[i].img +"' id='img'><input type='file' name='file'/><br>"+
                     "<input style='display: none' type='text' name='id' value='"+list[i].uId+"'/><br>"
             }
             $("#update_info").html(tr_str);

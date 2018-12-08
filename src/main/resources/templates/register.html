@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <link rel="icon" href="/images/title.png" type="images/x-ico"/>
     <title>注册</title>
+    <link href="/css/register.css" rel="stylesheet">
     <script type="text/javascript">
         function change(){
             var img =document.getElementById("verify");
@@ -12,13 +13,16 @@
     </script>
 </head>
 <body>
-<div id="header"></div>
+<div id="header">
+    <h1>用户注册</h1>
+</div>
 <div id="center">
+    <center>
     <form th:action="@{/api/user/reg}" method="post" enctype="multipart/form-data">
         <table>
             <tr>
                 <td>昵称：</td>
-                <td><input type="text" placeholder="昵称" name="username"></td>
+                <td><input type="text" placeholder="昵称" name="username" class="input"></td>
                 <td th:text="${username}"></td>
             </tr>
             <tr>
@@ -56,11 +60,13 @@
                 <td th:text="${code}"></td>
             </tr>
             <tr>
-                <td><input type="submit" value="注册"></td>
+                <td><input type="submit" value="注册" id="btn"></td>
+                <td><a href="/login">返回</a></td>
             </tr>
         </table>
     </form>
-    <a href="/login">返回</a>
+    </center>
+
 </div>
 <div id="footer"></div>
 </body>

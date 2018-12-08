@@ -1,0 +1,29 @@
+/**
+ * Created by ${邹} on 2018/12/7.
+ */
+
+*{
+    margin: 0;
+    padding:0;
+    background-color: #c8e4ff;
+}
+#header{
+    text-align: center;
+    height: 100px;
+}
+#center{
+    margin: 0 0 -200px 0;
+}
+#center td{
+    padding: 10px;
+    font-size: 20px;
+}
+#center input{
+    background-color: white;
+}
+#btn{
+    width: 100px;
+    height: 40px;
+    background: #7cafff;
+    border: 1px;
+}
